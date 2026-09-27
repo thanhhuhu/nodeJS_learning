@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import path from "path";
 import webRoutes from "./routes/web";
-
+// import  getConnection from "./config/database";
 dotenv.config();
 
 const app = express();
@@ -19,6 +19,8 @@ app.use(express.urlencoded({ extended: true }));
 
 //config routes
 webRoutes(app);
+
+// getConnection();
 
 //config static file: images/css/js
 app.use (express.static(`public`));

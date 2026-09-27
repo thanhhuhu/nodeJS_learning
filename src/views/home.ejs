@@ -8,10 +8,100 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-</head>
+
 <body>
-    <h1 style="color:blue">Hello from controller</h1>
-    <a href="/create-user" class="btn btn-warning">Create a new user</a>
-     <button type="button" class="btn btn-primary">Primary</button>
+
+    <div class="container mt-5">
+
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <h1 class="text-primary">
+                List User
+            </h1>
+
+            <a href="/create-user" class="btn btn-warning">
+                Create a new user
+            </a>
+
+        </div>
+
+        <!-- Table -->
+        <div class="table-responsive">
+
+            <table class="table table-striped table-hover table-bordered align-middle">
+
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Address</th>
+                        <th scope="col" class="text-center">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <% users.forEach(function(user) { %>
+
+                        <tr>
+                            <td>
+                                <%= user.id %>
+                            </td>
+
+                            <td>
+                                <%= user.name %>
+                            </td>
+
+                            <td>
+                                <%= user.email %>
+                            </td>
+
+                            <td>
+                                <%= user.address %>
+                            </td>
+
+                            <td class="text-center">
+
+                                <a
+                                    href="/view-user/<%= user.id %>"
+                                    class="btn btn-primary btn-sm"
+                                >
+                                    View
+                                </a>
+
+                                <a
+                                    href="/edit-user/<%= user.id %>"
+                                    class="btn btn-warning btn-sm"
+                                >
+                                    Edit
+                                </a>
+
+                                <a
+                                    href="/delete-user/<%= user.id %>"
+                                    class="btn btn-danger btn-sm"
+                                >
+                                    Delete
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                    <% }) %>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
 </body>
+
+
+
+
 </html>
