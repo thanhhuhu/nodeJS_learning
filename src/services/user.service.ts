@@ -1,44 +1,85 @@
-import getConnection from "../config/database";
+
+import bcrypt from "bcrypt";
 import { prisma } from "../config/client";
 
+const handleCreateUser = async (
+    fullName: string,
+    email: string,
+    address: string,
+    password: string
+) => {
+    const hashedPassword = await bcrypt.hash(password, 12);
 
-const  handleCreateUser = async(fullName:string, email:string, address:string) => {
-   const newUser = await prisma.user.create({
-      data :{
-        name: fullName, 
-        email: email,
-        address: address,
-      }
-    })
-    return newUser;
-}
+    return prisma.user.create({
+        data: {
+            username: email,
+            password: hashedPassword,
+            fullName,
+            address,
+            accountType: "USER",
+        },
+    });
+};
+
 const getAllUser = async () => {
-  const users = await prisma.user.findMany()
-  return users;
+    return prisma.user.findMany({
+        select: {
+            id: true,
+            username: true,
+            fullName: true,
+            address: true,
+            phone: true,
+            accountType: true,
+            avatar: true,
+        },
+    });
+};
+
+const handleDeleteUser = async (id: string) => {
+    return prisma.user.delete({
+        where: { id: Number(id) },
+    });
+};
+
+const getUserById = async (id: string) => {
+    return prisma.user.findUnique({
+        where: { id: Number(id) },
+        select: {
+            id: true,
+            username: true,
+            fullName: true,
+            address: true,
+            phone: true,
+            accountType: true,
+            avatar: true,
+        },
+    });
+};
+
+const updateUserById = async (
+    id: string,
+    fullName: string,
+    email: string,
+    address: string
+) => {
+    return prisma.user.update({
+        where: { id: Number(id) },
+        data: {
+            fullName,
+            username: email,
+            address,
+        },
+    });
+};
+const getAllRoles = async() =>{
+  const roles = await prisma.role.findMany()
+  return roles
 }
-const handleDeleteUser = async(id:string)=>{
- const result = await prisma.user.delete ({
-  where: {id: + id}
- })
- return result
-}
-const getUserById = async(id:string)=>{
-  const user = await prisma.user.findUnique({
-    where : { id : +id}
-  })
-  return user
-}
-const updateUserById = async ( id:string,
-  email:string, address:string, fullName:string,
-) =>{
-  const updateUser = await prisma.user.update ({
-    where: {id:+id},
-    data: {
-      name: fullName,
-      email: email,
-      address: address,
-    }
-  })
-  return updateUser
-}
-export {handleCreateUser, getAllUser, handleDeleteUser, getUserById, updateUserById}
+export {
+    handleCreateUser,
+    getAllUser,
+    handleDeleteUser,
+    getUserById,
+    updateUserById,
+    getAllRoles,
+};
