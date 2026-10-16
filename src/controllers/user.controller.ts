@@ -19,13 +19,34 @@ const getCreateUserPage = async(req:Request,res:Response)=>{
         roles:roles
     });
 }
+
 const postCreateUser = async (req: Request, res: Response) => {
-    const { fullName, username, phone,role, address } = req.body;
+    try {
+        const { fullName, username, phone, role,address, password } = req.body;
 
-    // await handleCreateUser(fullName, email, address, password);
+        if (!fullName || !username || !password) {
+            return res.status(400).send(
+                "Full name, username and password are required."
+            );
+        }
 
-    return res.redirect("/admin/user");
+        await handleCreateUser(
+            fullName,
+            username,
+            address ?? "",
+            password,
+            phone ?? "",
+            req.file?.filename ?? null
+        );
+
+        console.log("User created successfully:", username);
+        return res.redirect("/admin/user");
+    } catch (error) {
+        console.error("Create user failed:", error);
+        return res.status(500).send("Failed to create user.");
+    }
 };
+
 const postDeleteUser = async (req:Request, res:Response) => {
 
   const { id } = req.params;
@@ -53,13 +74,29 @@ const getViewUser = async (req:Request, res:Response) => {
         user:user
      })
 }
-const postUpdateUser = async( req: Request, res: Response) =>{
-     const {id, fullName, email,address} = req.body
- 
-    const a =  await updateUserById (id,
-        fullName,
-        email,
-        address)
-     return res.redirect("/")
-}
+
+const postUpdateUser = async (req: Request, res: Response) => {
+    try {
+        const { id, fullName, username, address } = req.body;
+
+        if (!id || !username || !fullName) {
+            return res.status(400).send(
+                "ID, full name and username are required."
+            );
+        }
+
+        await updateUserById(
+            String(id),
+            fullName,
+            username,
+            address ?? ""
+        );
+
+        return res.redirect("/admin/user");
+    } catch (error) {
+        console.error("Update user failed:", error);
+        return res.status(500).send("Failed to update user.");
+    }
+};
+
 export {getHomePage, getCreateUserPage,postCreateUser, postDeleteUser, getViewUser,postUpdateUser}

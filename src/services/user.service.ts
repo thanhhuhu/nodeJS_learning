@@ -1,28 +1,34 @@
 
 import bcrypt from "bcrypt";
 import { prisma } from "../config/client";
+import { ACCOUNT_TYPE } from "../config/constant";
 
 const handleCreateUser = async (
     fullName: string,
-    email: string,
+    username: string,
     address: string,
-    password: string
+    password: string,
+    phone: string,
+    avatar: string | null
 ) => {
     const hashedPassword = await bcrypt.hash(password, 12);
 
     return prisma.user.create({
         data: {
-            username: email,
+            username,
             password: hashedPassword,
             fullName,
             address,
-            accountType: "USER",
+            phone,
+            accountType: "ACCOUNT_TYPE.SYSTEM",
+            avatar,
         },
     });
 };
 
+
 const getAllUser = async () => {
-    return prisma.user.findMany({
+    return await prisma.user.findMany({
         select: {
             id: true,
             username: true,

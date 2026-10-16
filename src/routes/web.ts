@@ -2,7 +2,7 @@ import express , {Express}from "express";
 import { getCreateUserPage, getHomePage, postCreateUser, postDeleteUser,getViewUser, postUpdateUser} from "../controllers/user.controller";
 import { getAdminUserPage, getDashboardPage, getAdminProductPage, getAdminOrderPage} from "../controllers/admin/dashboard.controller";
 import multer from "multer";
-
+import fileUploadMiddleware from "../middleware/multer"
 const router = express.Router();
 
 const upload = multer({
@@ -25,7 +25,7 @@ const webRoutes = (app: Express) => {
     // Chỉ khai báo một route tạo người dùng
     router.post(
         "/admin/handle-create-user",
-        upload.single("avatar"),
+        fileUploadMiddleware("avatar"),
         postCreateUser
     );
 
