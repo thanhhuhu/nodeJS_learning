@@ -22,11 +22,18 @@ const getCreateUserPage = async(req:Request,res:Response)=>{
 
 const postCreateUser = async (req: Request, res: Response) => {
     try {
-        const { fullName, username, phone, role,address, password } = req.body;
+        const {
+            fullName,
+            username,
+            phone,
+            role,
+            address,
+            password,
+        } = req.body;
 
-        if (!fullName || !username || !password) {
+        if (!fullName || !username || !password || !role) {
             return res.status(400).send(
-                "Full name, username and password are required."
+                "Full name, username, password and role are required."
             );
         }
 
@@ -36,17 +43,18 @@ const postCreateUser = async (req: Request, res: Response) => {
             address ?? "",
             password,
             phone ?? "",
-            req.file?.filename ?? null
+            req.file?.filename ?? null,
+            role
         );
 
         console.log("User created successfully:", username);
+
         return res.redirect("/admin/user");
     } catch (error) {
         console.error("Create user failed:", error);
         return res.status(500).send("Failed to create user.");
     }
 };
-
 const postDeleteUser = async (req:Request, res:Response) => {
 
   const { id } = req.params;
