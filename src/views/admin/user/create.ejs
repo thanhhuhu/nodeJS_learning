@@ -136,16 +136,18 @@
                                             Role
                                         </label>
                                         <select
-                                            class="form-select"
-                                            id="accountType"
-                                            name="accountType"
-                                            required
+                                                class="form-select"
+                                                id="roleId"
+                                                name="roleId"
+                                                required
                                         >
-                                         <% roles.forEach((role,index) => { %>
-                                        <option name ="role" value="<%-role.id %>" >
-                                            <%- role.name %>
-                                        </option>
-                                        <%})%>   
+                                            <option value="">Select a role</option>
+
+                                            <% roles.forEach((role) => { %>
+                                                <option value="<%= role.id %>">
+                                                    <%= role.name %>
+                                                </option>
+                                            <% }) %>
                                         </select>
                                     </div>
                                     </div>             
