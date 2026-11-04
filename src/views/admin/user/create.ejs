@@ -10,15 +10,16 @@
     <meta name="author" content="Hỏi Dân IT" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
-                    $(document).ready(() => {
-                        const avatarFile = $("#avatarFile");
-                        avatarFile.change(function (e) {
-                            const imgURL = URL.createObjectURL(e.target.files[0]);
-                            $("#avatarPreview").attr("src", imgURL);
-                            $("#avatarPreview").css({ "display": "block" });
-                        });
-                    });
-                </script>
+        const avatarFile = document.getElementById("avatarFile");
+        const avatarPreview = document.getElementById("avatarPreview");
+        avatarFile.addEventListener("change", (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                avatarPreview.src = URL.createObjectURL(file);
+                avatarPreview.style.display = "block";
+            }
+        });
+    </script>
 
     <title>Create User</title>
 
@@ -171,7 +172,9 @@
                                         <input name ="avatar" class="form-control" type="file" id="avatarFile" accept=".png, .jpg, .jpeg">
 
                                     </div>  
-                                    <img style="max-height: 250px; display: none;" alt="avatar preview" id="avatarPreview" />
+                                    <img style="max-height: 250px; display: block;" alt="avatar preview" id="avatarPreview"
+
+                                    />
     
                                     
 

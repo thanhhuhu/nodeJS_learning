@@ -26,12 +26,12 @@ const postCreateUser = async (req: Request, res: Response) => {
             fullName,
             username,
             phone,
-            role,
+            roleId,
             address,
             password,
         } = req.body;
 
-        if (!fullName || !username || !password || !role) {
+        if (!fullName || !username || !password) {
             return res.status(400).send(
                 "Full name, username, password and role are required."
             );
@@ -44,7 +44,7 @@ const postCreateUser = async (req: Request, res: Response) => {
             password,
             phone ?? "",
             req.file?.filename ?? null,
-            role
+            roleId
         );
 
         console.log("User created successfully:", username);

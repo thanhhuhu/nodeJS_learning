@@ -28,7 +28,7 @@ webRoutes(app);
 
 //config static file: images/css/js
 app.use(express.static(path.join(process.cwd(), "public")));
-
+app.use("/images", express.static(path.join(process.cwd(), "assets", "images")));
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
     console.log("env port:", process.env.PORT);
