@@ -50,7 +50,10 @@ const postCreateUser = async (req: Request, res: Response) => {
         console.log("User created successfully:", username);
 
         return res.redirect("/admin/user");
-    } catch (error) {
+    } catch (error){
+        if (error.code === "P2002") {
+            return res.status(400).send("Username/email đã tồn tại, hãy dùng email khác.");
+        }
         console.error("Create user failed:", error);
         return res.status(500).send("Failed to create user.");
     }
@@ -66,7 +69,7 @@ const postDeleteUser = async (req:Request, res:Response) => {
     console.log("Delete user ID:", id);
 
     const a  = await handleDeleteUser(id);
-    return res.redirect("/"); 
+    return res.redirect("/admin/user");
 }
 // get user by id
 const getViewUser = async (req:Request, res:Response) => {
@@ -77,9 +80,10 @@ const getViewUser = async (req:Request, res:Response) => {
      }
      //get user by id 
      const user = await getUserById(id)
-     return res.render("view-user.ejs",{
+     return res.render("admin/user/detail",{
         id: id,
-        user:user
+        user:user,
+
      })
 }
 
