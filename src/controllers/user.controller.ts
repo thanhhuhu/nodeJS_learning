@@ -2,13 +2,8 @@ import { Request, Response } from "express";
 import { getAllUser, handleCreateUser, handleDeleteUser, getUserById, updateUserById, getAllRoles} from "../services/user.service";
 
 const getHomePage = async (req:Request,res:Response)=>{
-    // get users 
-    const users = await getAllUser();
 
-    return res.render("home.ejs",{
-        users: users,
-        
-    });
+    return res.render("client/home/show.ejs");
 }
 const getCreateUserPage = async(req:Request,res:Response)=>{
     // const {fullName,email,address} = req.body;
@@ -92,8 +87,8 @@ const postUpdateUser = async (req: Request, res: Response) => {
     try {
         const { id,fullName, username,phone,roleId, address } = req.body;
         const file = req.file;
-        const avatar = file?.filename?? null;
-        if (!id || !username || !fullName) {
+        const avatar = req.file?.filename;   // undefined nếu không chọn ảnh
+          if (!id || !username || !fullName) {
             return res.status(400).send(
                 "ID, full name and username are required."
             );
@@ -101,10 +96,10 @@ const postUpdateUser = async (req: Request, res: Response) => {
         await updateUserById(
             String(id),
             fullName,
-            phone,
+            phone ?? "",
+            address ?? "",
             roleId,
-            avatar,
-            address ?? ""
+            avatar
         );
 
         return res.redirect("/admin/user");

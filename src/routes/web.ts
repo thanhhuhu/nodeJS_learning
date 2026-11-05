@@ -16,11 +16,10 @@ const webRoutes = (app: Express) => {
     router.get("/create-user", getCreateUserPage);
     router.post("/handle-delete-user/:id", postDeleteUser);
     router.get("/handle-view-user/:id", getViewUser);
-    router.post("/handle-update-user", postUpdateUser);
-    router.post ("/admin/update-user", postUpdateUser);
-    router.post ("/admin/update-user", fileUploadMiddleware("avatar"), postUpdateUser)
+    // router.post("/handle-update-user", postUpdateUser);
+    router.post("/admin/handle-update-user", fileUploadMiddleware("avatar"), postUpdateUser);
     // Admin routes
-    router.get("/admin", getDashboardPage);
+        router.get("/admin", getDashboardPage);
     router.get("/admin/user", getAdminUserPage);
     router.get("/admin/create-user", getCreateUserPage);
 
