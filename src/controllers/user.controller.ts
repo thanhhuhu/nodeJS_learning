@@ -80,27 +80,30 @@ const getViewUser = async (req:Request, res:Response) => {
      }
      //get user by id 
      const user = await getUserById(id)
+     const roles = await getAllRoles();
      return res.render("admin/user/detail",{
         id: id,
         user:user,
-
+        roles: roles
      })
 }
 
 const postUpdateUser = async (req: Request, res: Response) => {
     try {
-        const { id, fullName, username, address } = req.body;
-
+        const { id,fullName, username,phone,roleId, address } = req.body;
+        const file = req.file;
+        const avatar = file?.filename?? null;
         if (!id || !username || !fullName) {
             return res.status(400).send(
                 "ID, full name and username are required."
             );
         }
-
         await updateUserById(
             String(id),
             fullName,
-            username,
+            phone,
+            roleId,
+            avatar,
             address ?? ""
         );
 

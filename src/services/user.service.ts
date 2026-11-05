@@ -70,29 +70,29 @@ const getUserById = async (id: string) => {
             phone: true,
             accountType: true,
             avatar: true,
+            roleId: true,
         },
     });
 };
 
 const updateUserById = async (
-    id: string,
-    fullName: string,
-    email: string,
-    address: string
-) => {
+    id: string, fullName: string, phone: string, address: string, role: any, avatar: string) => {
     return prisma.user.update({
         where: {
             id: Number(id),
         },
         data: {
             fullName,
-            username: email,
-            address,
+            phone:phone,
+            roleId: +role,
+            address:address,
+            ...(avatar !== undefined && {avatar:avatar})
         },
     });
 };
 
 const getAllRoles = async () => {
+
     return prisma.role.findMany();
 };
 

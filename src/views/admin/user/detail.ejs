@@ -66,7 +66,7 @@
                     <div class="col-12 col-md-8 col-lg-6">
 
                         <form
-                                action="/admin/handle-create-user"
+                                action="/admin/handle-update-user"
                                 method="POST"
                                 enctype="multipart/form-data"
                         >
@@ -102,22 +102,8 @@
                                             id="username"
                                             name="username"
                                             placeholder="name@example.com"
-                                            required
                                             value = "<%= user.username %>"
 
-                                    />
-                                </div>
-                                <div class="mb-3">
-                                    <label for="password" class="form-label fw-semibold">
-                                        Password
-                                    </label>
-                                    <input
-                                            type="password"
-                                            class="form-control"
-                                            id="password"
-                                            name="password"
-                                            placeholder="Leave blank to keep current password"
-                                            minlength="8"
                                     />
                                 </div>
                                 <div class="row">
@@ -136,7 +122,7 @@
                                         />
                                     </div>
                                     <div class="mb-3 col-6">
-                                        <label for="accountType" class="form-label fw-semibold">
+                                        <label for="roleId" class="form-label fw-semibold">
                                             Role
                                         </label>
                                         <select
@@ -145,8 +131,14 @@
                                                 name="roleId"
                                                 required
                                         >
-                                            <option value="">Select a role</option>
-
+                                            <% roles.forEach((role) => { %>
+                                                <option
+                                                        value="<%= role.id %>"
+                                                        <%= Number(user.roleId) === Number(role.id) ? "selected" : "" %>
+                                                >
+                                                    <%= role.name %>
+                                                </option>
+                                            <% }) %>
                                         </select>
                                     </div>
                                 </div>
@@ -165,20 +157,27 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="avatar" class="form-label fw-semibold">
-                                        Avatar
-                                    </label>
-                                    <input name ="avatar" class="form-control" type="file" id="avatarFile" accept=".png, .jpg, .jpeg">
-
+                                    <label class="form-label">Avatar</label>
+                                    <input
+                                            type="file"
+                                            class="form-control"
+                                            name="avatar"
+                                            id="avatarFile"
+                                            accept="image/*"
+                                    >
                                 </div>
-                                <img style="max-height: 250px; display: block;" alt="avatar preview" id="avatarPreview"
 
-                                />
-
-
-
+                                <% if (user.avatar) { %>
+                                    <img
+                                            id="avatarPreview"
+                                            src="/assets/images/<%= user.avatar %>"
+                                            alt="User avatar"
+                                            style="max-width: 200px; max-height: 200px; object-fit: cover;"
+                                    >
+                                <% }
+                                %>
                                 <button class="btn btn-primary w-100 mt-2" type="submit">
-                                    View detail a user
+                                    Update user
                                 </button>
 
                                 <a href="/admin/user" class="btn btn-outline-secondary w-100 mt-2">
