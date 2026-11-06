@@ -17,4 +17,3 @@ CREATE UNIQUE INDEX `users_username_key` ON `users`(`username`);
 
 -- RedefineIndex
 CREATE INDEX `users_roleId_idx` ON `users`(`roleId`);
-DROP INDEX `users_roleId_fkey` ON `users`;

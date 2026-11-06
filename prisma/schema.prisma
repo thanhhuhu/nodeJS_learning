@@ -33,7 +33,17 @@ model Role {
 
   @@map("roles")
 }
+model Product {
+  id         Int    @id @default(autoincrement())
+  name       String @db.VarChar(255)
+  image      String @db.VarChar(255)
+  price      Float
+  shortDesc  String @db.VarChar(255)
+  detailDesc String @db.Text
+  category   String @default("Fruits") @db.VarChar(100)
 
+  @@map("products")
+}
 model Order {
   id          Int     @id @default(autoincrement())
   name        String? @db.VarChar(255)

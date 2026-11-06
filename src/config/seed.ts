@@ -53,7 +53,17 @@ const initDatabase = async () => {
                 roleId: userRole.id,
             },
         });
-
+        // if ((await prisma.product.count()) === 0) {
+        //     await prisma.product.createMany({
+        //         data: [
+        //             { name: "Oranges",     image: "fruite-item-1.jpg", price: 4.99, shortDesc: "Fresh juicy oranges", detailDesc: "Oranges rich in vitamin C...", category: "Fruits" },
+        //             { name: "Raspberries", image: "fruite-item-2.jpg", price: 5.99, shortDesc: "Sweet red raspberries", detailDesc: "...", category: "Fruits" },
+        //             { name: "Banana",      image: "fruite-item-3.jpg", price: 2.99, shortDesc: "Ripe yellow bananas", detailDesc: "...", category: "Fruits" },
+        //             { name: "Apricots",    image: "fruite-item-4.jpg", price: 4.49, shortDesc: "Soft golden apricots", detailDesc: "...", category: "Fruits" },
+        //             { name: "Grapes",      image: "fruite-item-5.jpg", price: 4.99, shortDesc: "Seedless green grapes", detailDesc: "...", category: "Fruits" },
+        //         ],
+        //     });
+        // }
         console.log(">> Users initialized successfully.");
     } catch (error) {
         console.error(">> Database initialization failed:", error);

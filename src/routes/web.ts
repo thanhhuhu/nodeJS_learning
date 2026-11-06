@@ -3,7 +3,8 @@ import { getCreateUserPage, getHomePage, postCreateUser, postDeleteUser,getViewU
 import { getAdminUserPage, getDashboardPage, getAdminProductPage, getAdminOrderPage} from "../controllers/admin/dashboard.controller";
 import multer from "multer";
 import fileUploadMiddleware from "../middleware/multer"
-import {getProductPage} from "../../public/client/product.controller";
+import {getProducts} from "../services/product.service";
+import {getProductPage} from "../controllers/product.controller";
 const router = express.Router();
 
 const upload = multer({
@@ -13,6 +14,7 @@ const upload = multer({
 const webRoutes = (app: Express) => {
     // Public routes
     router.get("/", getHomePage);
+
     router.get("/product/:id", getProductPage)
     router.get("/create-user", getCreateUserPage);
     router.post("/handle-delete-user/:id", postDeleteUser);
