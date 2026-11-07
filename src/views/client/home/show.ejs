@@ -126,21 +126,14 @@
                                         </div>
 
                                         <!-- Product Category -->
-                                        <div
-                                                class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-                                                style="top: 10px; left: 10px;"
-                                        >
-                                            <%= p.category?.name || 'Product' %>
+                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                                             style="top: 10px; left: 10px;">
+                                            <%= p.category %>
                                         </div>
 
-                                        <!-- Product Information -->
-                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-
-                                            <h4><%= p.name %></h4>
-
-                                            <p>
-                                                <%= p.description || 'No description available.' %>
-                                            </p>
+                                        <p>
+                                            <%= p.shortDesc %>
+                                        </p>
 
                                             <div class="d-flex justify-content-between flex-lg-wrap">
                                                 <p class="text-dark fs-5 fw-bold mb-0">
